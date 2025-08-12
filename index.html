@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering App</title>
+    
+    <!-- Skeleton CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="row">
+                <div class="twelve columns">
+                    <h1 class="logo"><i class="fas fa-utensils"></i> FoodOrder</h1>
+                    <div class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Section -->
+        <main>
+            <!-- Product Catalog Section -->
+            <section id="product-catalog" class="section">
+                <div class="row">
+                    <div class="twelve columns">
+                        <h2>Our Menu</h2>
+                    </div>
+                </div>
+                <div class="row" id="product-list">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </section>
+
+            <!-- Product Details Modal -->
+            <div id="product-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <div id="product-details">
+                        <!-- Product details will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shopping Cart Section -->
+            <section id="shopping-cart" class="section hidden">
+                <div class="row">
+                    <div class="twelve columns">
+                        <h2>Your Cart</h2>
+                        <div id="cart-items">
+                            <!-- Cart items will be dynamically loaded here -->
+                        </div>
+                        <div id="cart-summary">
+                            <div class="row">
+                                <div class="eight columns">
+                                    <h4>Total:</h4>
+                                </div>
+                                <div class="four columns">
+                                    <h4 id="cart-total">Rp 0</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-actions">
+                            <button id="continue-shopping" class="button">Continue Shopping</button>
+                            <button id="checkout-button" class="button button-primary">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Checkout Form Section -->
+            <section id="checkout-form" class="section hidden">
+                <div class="row">
+                    <div class="twelve columns">
+                        <h2>Checkout</h2>
+                        <form id="order-form">
+                            <div class="row">
+                                <div class="twelve columns">
+                                    <label for="name">Name</label>
+                                    <input class="u-full-width" type="text" id="name" name="name" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="twelve columns">
+                                    <label for="address">Delivery Address</label>
+                                    <textarea class="u-full-width" id="address" name="address" required></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="twelve columns">
+                                    <label for="phone">Phone Number</label>
+                                    <input class="u-full-width" type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="twelve columns">
+                                    <h4>Order Summary</h4>
+                                    <div id="order-summary">
+                                        <!-- Order summary will be dynamically loaded here -->
+                                    </div>
+                                    <h4>Total: <span id="order-total">Rp 0</span></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="twelve columns">
+                                    <button type="button" id="back-to-cart" class="button">Back to Cart</button>
+                                    <button type="submit" id="place-order" class="button button-primary">Place Order via WhatsApp</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="row">
+                <div class="twelve columns">
+                    <p>&copy; 2025 FoodOrder. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>
