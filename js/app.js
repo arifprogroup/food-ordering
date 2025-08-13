@@ -127,6 +127,21 @@ function setupEventListeners() {
     
     // Place order button
     orderFormEl.addEventListener('submit', handleOrderSubmit);
+    
+    // Sticky header scroll effect
+    window.addEventListener('scroll', handleHeaderScroll);
+}
+
+// Handle header scroll effect
+function handleHeaderScroll() {
+    const header = document.querySelector('.header');
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
 }
 
 // Handle product click
