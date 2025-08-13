@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f9f9f9;
+    padding-top: 120px; /* Add space for fixed header */
 }
 
 /* Override Bootstrap container max-width */
@@ -19,9 +20,25 @@ body {
 
 /* Header Styles */
 .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     padding: 20px 0;
-    border-bottom: 1px solid #eee;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(238, 238, 238, 0.8);
     margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -154,6 +171,10 @@ body {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+    body {
+        padding-top: 100px; /* Adjust for smaller header on mobile */
+    }
+    
     .logo {
         font-size: 2rem;
     }
@@ -176,6 +197,10 @@ body {
 }
 
 @media (max-width: 480px) {
+    body {
+        padding-top: 90px; /* Adjust for even smaller header on small mobile */
+    }
+    
     .header {
         padding: 15px 0;
     }
