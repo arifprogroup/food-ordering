@@ -14,8 +14,9 @@ A responsive food ordering web application that allows users to browse a product
 ## Technologies Used
 
 - HTML5
-- CSS3 with Skeleton CSS framework
+- CSS3 with Bootstrap 5 framework
 - Vanilla JavaScript
+- Bootstrap 5 for responsive design and components
 - Font Awesome for icons
 - Google Fonts for typography
 - WhatsApp Click-to-Chat API
