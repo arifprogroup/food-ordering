@@ -56,7 +56,6 @@ let cart = [];
 const productListEl = document.getElementById('product-list');
 const productModalEl = document.getElementById('product-modal');
 const productDetailsEl = document.getElementById('product-details');
-const closeModalBtn = document.querySelector('.close');
 const cartIconEl = document.querySelector('.cart-icon');
 const cartCountEl = document.getElementById('cart-count');
 const productCatalogEl = document.getElementById('product-catalog');
@@ -72,6 +71,9 @@ const backToCartBtn = document.getElementById('back-to-cart');
 const placeOrderBtn = document.getElementById('place-order');
 const orderFormEl = document.getElementById('order-form');
 
+// Bootstrap modal instance
+let bootstrapModal;
+
 // Format price to IDR
 function formatPrice(price) {
     return `Rp ${price.toLocaleString('id-ID')}`;
@@ -81,6 +83,8 @@ function formatPrice(price) {
 function init() {
     renderProducts();
     setupEventListeners();
+    // Initialize Bootstrap modal
+    bootstrapModal = new bootstrap.Modal(productModalEl);
 }
 
 // Render product catalog
@@ -89,14 +93,14 @@ function renderProducts() {
     
     products.forEach(product => {
         const productCol = document.createElement('div');
-        productCol.className = 'four columns';
+        productCol.className = 'col-lg-4 col-md-6 mb-4';
         
         productCol.innerHTML = `
             <div class="product-card" data-id="${product.id}">
                 <img src="${product.image}" alt="${product.name}" class="product-image">
                 <h3 class="product-title">${product.name}</h3>
                 <p class="product-price">${formatPrice(product.price)}</p>
-                <button class="button button-primary view-details">View Details</button>
+                <button class="btn btn-primary view-details">View Details</button>
             </div>
         `;
         
@@ -108,18 +112,6 @@ function renderProducts() {
 function setupEventListeners() {
     // Product details
     productListEl.addEventListener('click', handleProductClick);
-    
-    // Close modal
-    closeModalBtn.addEventListener('click', () => {
-        productModalEl.style.display = 'none';
-    });
-    
-    // Close modal when clicking outside
-    window.addEventListener('click', (e) => {
-        if (e.target === productModalEl) {
-            productModalEl.style.display = 'none';
-        }
-    });
     
     // Cart icon click
     cartIconEl.addEventListener('click', showCart);
@@ -155,25 +147,25 @@ function handleProductClick(e) {
 function showProductDetails(product) {
     productDetailsEl.innerHTML = `
         <div class="row">
-            <div class="six columns">
-                <img src="${product.image}" alt="${product.name}" class="u-full-width">
+            <div class="col-md-6">
+                <img src="${product.image}" alt="${product.name}" class="img-fluid rounded">
             </div>
-            <div class="six columns">
+            <div class="col-md-6">
                 <h3>${product.name}</h3>
-                <p class="product-price">${formatPrice(product.price)}</p>
+                <p class="product-price h4 text-primary">${formatPrice(product.price)}</p>
                 <p>${product.description}</p>
-                <button class="button button-primary add-to-cart" data-id="${product.id}">Add to Cart</button>
+                <button class="btn btn-primary add-to-cart" data-id="${product.id}">Add to Cart</button>
             </div>
         </div>
     `;
     
-    productModalEl.style.display = 'block';
+    bootstrapModal.show();
     
     // Add event listener to Add to Cart button
     const addToCartBtn = productDetailsEl.querySelector('.add-to-cart');
     addToCartBtn.addEventListener('click', () => {
         addToCart(product);
-        productModalEl.style.display = 'none';
+        bootstrapModal.hide();
     });
 }
 
@@ -214,22 +206,22 @@ function updateCartUI() {
     
     cart.forEach(item => {
         const cartItemEl = document.createElement('div');
-        cartItemEl.className = 'cart-item';
+        cartItemEl.className = 'cart-item d-flex align-items-center p-3 border-bottom';
         
         cartItemEl.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-            <div class="cart-item-details">
-                <h5 class="cart-item-title">${item.name}</h5>
-                <p class="cart-item-price">${formatPrice(item.price)}</p>
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image rounded me-3" style="width: 80px; height: 80px; object-fit: cover;">
+            <div class="cart-item-details flex-grow-1">
+                <h5 class="cart-item-title mb-1">${item.name}</h5>
+                <p class="cart-item-price mb-0 text-primary">${formatPrice(item.price)}</p>
             </div>
-            <div class="cart-item-quantity">
-                <button class="quantity-btn decrease" data-id="${item.id}">-</button>
-                <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
-                <button class="quantity-btn increase" data-id="${item.id}">+</button>
+            <div class="cart-item-quantity d-flex align-items-center me-3">
+                <button class="btn btn-outline-secondary btn-sm quantity-btn decrease" data-id="${item.id}">-</button>
+                <input type="number" class="form-control form-control-sm mx-2 quantity-input" value="${item.quantity}" min="1" data-id="${item.id}" style="width: 60px;">
+                <button class="btn btn-outline-secondary btn-sm quantity-btn increase" data-id="${item.id}">+</button>
             </div>
-            <div class="remove-item" data-id="${item.id}">
+            <button class="btn btn-outline-danger btn-sm remove-item" data-id="${item.id}">
                 <i class="fas fa-trash"></i>
-            </div>
+            </button>
         `;
         
         cartItemsEl.appendChild(cartItemEl);
@@ -306,17 +298,17 @@ function updateCartTotal() {
 
 // Show cart
 function showCart() {
-    productCatalogEl.classList.add('hidden');
-    checkoutFormEl.classList.add('hidden');
-    shoppingCartEl.classList.remove('hidden');
+    productCatalogEl.classList.add('d-none');
+    checkoutFormEl.classList.add('d-none');
+    shoppingCartEl.classList.remove('d-none');
     updateCartUI();
 }
 
 // Show product catalog
 function showProductCatalog() {
-    shoppingCartEl.classList.add('hidden');
-    checkoutFormEl.classList.add('hidden');
-    productCatalogEl.classList.remove('hidden');
+    shoppingCartEl.classList.add('d-none');
+    checkoutFormEl.classList.add('d-none');
+    productCatalogEl.classList.remove('d-none');
 }
 
 // Show checkout form
@@ -326,9 +318,9 @@ function showCheckoutForm() {
         return;
     }
     
-    shoppingCartEl.classList.add('hidden');
-    productCatalogEl.classList.add('hidden');
-    checkoutFormEl.classList.remove('hidden');
+    shoppingCartEl.classList.add('d-none');
+    productCatalogEl.classList.add('d-none');
+    checkoutFormEl.classList.remove('d-none');
     
     updateOrderSummary();
 }
@@ -339,13 +331,13 @@ function updateOrderSummary() {
     
     cart.forEach(item => {
         const orderItemEl = document.createElement('div');
-        orderItemEl.className = 'order-item';
+        orderItemEl.className = 'order-item d-flex justify-content-between align-items-center py-2 border-bottom';
         
         orderItemEl.innerHTML = `
             <div>
                 <strong>${item.name}</strong> x ${item.quantity}
             </div>
-            <div>
+            <div class="text-primary fw-bold">
                 ${formatPrice(item.price * item.quantity)}
             </div>
         `;
